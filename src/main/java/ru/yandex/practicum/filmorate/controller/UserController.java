@@ -21,7 +21,6 @@ public class UserController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
         User createdUser = userService.addUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
@@ -37,26 +36,6 @@ public class UserController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id) {
-        User user = userService.getUserById(id);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(user);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable int id) {
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
-    }
 
     @PutMapping("/{id}/friends/{friendId}")
     public ResponseEntity<Void> addFriend(@PathVariable int id, @PathVariable int friendId) {
@@ -70,15 +49,4 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}/friends")
-    public ResponseEntity<List<User>> getUserFriends(@PathVariable int id) {
-        List<User> friends = userService.getFriends(id);
-        return ResponseEntity.ok(friends);
-    }
-
-    @GetMapping("/{id}/friends/common/{otherId}")
-    public ResponseEntity<List<User>> getCommonFriends(@PathVariable int id, @PathVariable int otherId) {
-        List<User> commonFriends = userService.getCommonFriends(id, otherId);
-        return ResponseEntity.ok(commonFriends);
-    }
 }

@@ -48,9 +48,6 @@ public class UserService {
         return user;
     }
 
-    public void deleteUser(int id) {
-        userStorage.deleteUser(id);
-    }
 
     public void addFriend(int userId, int friendId) {
         User user = getUserById(userId);
@@ -58,6 +55,9 @@ public class UserService {
 
         user.addFriend((long) friendId);
         friend.addFriend((long) userId);
+        log.info("Пользователь с ID {} добавил в друзья пользователя с ID {}", userId, friendId);
+        userStorage.updateUser(user);
+        userStorage.updateUser(friend);
     }
 
     public void removeFriend(int userId, int friendId) {
@@ -66,23 +66,9 @@ public class UserService {
 
         user.removeFriend((long) friendId);
         friend.removeFriend((long) userId);
-    }
-
-    public List<User> getFriends(int userId) {
-        User user = getUserById(userId);
-        Set<Long> friendIds = user.getFriends().stream().collect(Collectors.toSet());
-        return userStorage.getUsersByIds(friendIds);
-    }
-
-    public List<User> getCommonFriends(int userId, int otherUserId) {
-        User user = getUserById(userId);
-        User otherUser = getUserById(otherUserId);
-
-        Set<Long> commonFriendIds = user.getFriends().stream()
-                .filter(otherUser.getFriends()::contains)
-                .collect(Collectors.toSet());
-
-        return userStorage.getUsersByIds(commonFriendIds);
+        log.info("Пользователь с ID {} удалил из друзей пользователя с ID {}", userId, friendId);
+        userStorage.updateUser(user);
+        userStorage.updateUser(friend);
     }
 
     private void validateUser(User user) {
