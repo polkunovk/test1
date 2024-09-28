@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleGeneralException(Exception ex) {
         log.error("Общая ошибка: {}", ex.getMessage());
         Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", "Произошла ошибка: " + ex.getMessage());
+        errorResponse.put("error", "Ошибка: " + ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
