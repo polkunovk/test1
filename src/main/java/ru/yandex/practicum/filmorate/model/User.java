@@ -31,12 +31,14 @@ public class User {
     private Set<Long> friends = new HashSet<>();
 
     public String getName() {
+        // Если имя не задано, возвращаем логин
         if (name == null || name.isBlank()) {
             return login;
         }
         return name;
     }
 
+    // Метод для установки имени
     public void setName(String name) {
         this.name = name;
     }
