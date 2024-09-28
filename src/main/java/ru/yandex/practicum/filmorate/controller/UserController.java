@@ -39,13 +39,13 @@ public class UserController {
     @PutMapping("/{id}/friends/{friendId}")
     public ResponseEntity<Void> addFriend(@PathVariable int id, @PathVariable int friendId) {
         userService.addFriend(id, friendId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();  // Изменено на 204 No Content
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
     public ResponseEntity<Void> removeFriend(@PathVariable int id, @PathVariable int friendId) {
         userService.removeFriend(id, friendId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();  // Оставляем 204 No Content
     }
 
 }
